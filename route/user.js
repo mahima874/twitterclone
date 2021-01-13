@@ -53,6 +53,7 @@ router.route('/signin').post((req, res) => {
                     user: {
                         msg: 'Hello ' + user.name + ', You are logged in successfully',
                         id: user.id,
+                        name: user.name,
                         username: user.username
                     }
                 })

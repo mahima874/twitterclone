@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Segment, Grid, Form, Divider, Button, Input } from 'semantic-ui-react';
 import { useHistory } from 'react-router';
 import axios from 'axios';
+import { userContext } from '../Context/user.context';
 
 const Home = () => {
+    const {user, setUser} = useContext(userContext);
     const history = useHistory();
     const fields = ['username', 'password'];
     const [input, setInput] = useState({
@@ -31,17 +33,26 @@ const Home = () => {
         event.preventDefault();
     }
     const handleSignin = () => {
-        axios.post("http://localhost:5001/user/signin", input)
+        axios.post("http://localhost:8080/user/signin", input)
             .then(res => {
                 if(res.data.user) {
+                    const {msg, id, name, username} = res.data.user;
                     setMessage(() => {
                         return {
-                            text: res.data.user.msg
+                            text: msg
                         }
                     })
                     setTimeout(() => {
                         history.push('./dashboard');
                     }, 2000);
+                    setUser(() => {
+                        return {
+                            id: id,
+                            name: name,
+                            username: username
+                        }
+                    })
+                    console.log(user);
                 }
                 else {
                     setMessage(() => {
@@ -52,11 +63,7 @@ const Home = () => {
                 }
             })
             .catch(err => {
-                setMessage(() => {
-                    return {
-                        text: err
-                    }
-                })
+                console.log(err);
             })
     }
     const handleSignup = () => {

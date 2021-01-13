@@ -6,7 +6,7 @@ const Comment = require('../models/comment.model');
 router.route('/writepost').post((req, res) => {
     const {username, post} = req.body;
 
-    if(!post) return res.status(400).json({msg: 'please write something before post'});
+    if(!post) return res.json({msg: 'please write something before post'});
 
     const newPost = new Post({
         username,
@@ -34,7 +34,7 @@ router.route('/').get((req, res) => {
 router.route('/comment').post((req, res) => {
     const {username, post, comment} = req.body;
 
-    if(!comment) return res.status(400).json({msg: 'please write something before comment'});
+    if(!comment) return res.json({msg: 'please write something before comment'});
 
     const newComment = new Comment({
         username,

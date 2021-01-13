@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router';
 
 const Signup = () => {
-    const history = useHistory;
+    const history = useHistory();
     const radios = ['Male', 'Female'];
     const [input, setInput] = useState({
         firstname: "",
@@ -74,7 +74,7 @@ const Signup = () => {
             password: input.password
         }
 
-        axios.post("http://localhost:5001/user/signup", userDetails)
+        axios.post("http://localhost:8080/user/signup", userDetails)
             .then(res => {
                 if(res.data.user) {
                     setMessage(() => {
@@ -95,11 +95,7 @@ const Signup = () => {
                 }
             })
             .catch(err => {
-                setMessage(() => {
-                    return {
-                        text: err
-                    }
-                })
+                console.log(err);
             })
 
     }
@@ -177,7 +173,6 @@ const Signup = () => {
                                     content='Sign up' 
                                     primary
                                     type='submit'  
-                                    size='small'
                                     onClick={handleButton}
                                 />
                             </center>
